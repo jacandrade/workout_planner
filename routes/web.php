@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/about', function () {
+    $tasks = ['task one', 'task two', 'task 3'];
+    return view('about', compact('tasks'));
+});
