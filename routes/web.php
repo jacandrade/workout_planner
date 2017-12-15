@@ -15,7 +15,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
-    $tasks = ['task one', 'task two', 'task 3'];
-    return view('about', compact('tasks'));
+Route::get('/plans', function () {
+    $plans = DB::table('plan')->get();
+    return $plans;
+});
+
+Route::get('/plan_days', function () {
+    $plan_days = DB::table('plan_days')->get();
+    return $plan_days;
+});
+
+Route::get('/exercises', function () {
+    $exercises = DB::table('exercise')->get();
+    return $exercises;
+});
+
+Route::get('/exercise_instances', function () {
+    $exercise_instances = DB::table('exercise_instances')->get();
+    return $exercise_instances;
 });

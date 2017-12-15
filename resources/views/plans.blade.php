@@ -79,11 +79,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    About page
+                    Plans
                 </div>
                 <ul>
-                    @foreach ($tasks as $task)
-                        <p>{{ $task }}</p>
+                    @foreach ($plans as $plan)
+                        <p>{{ $plan->plan_name }}</p>
                     @endforeach
                 </ul>
 
