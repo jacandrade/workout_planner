@@ -15,22 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/plans', function () {
-    $plans = DB::table('plan')->get();
-    return $plans;
-});
+Route::get('/plans', 'PlansController@index');
+Route::get('/plans/{plan}', 'PlansController@show');
 
-Route::get('/plan_days', function () {
-    $plan_days = DB::table('plan_days')->get();
-    return $plan_days;
-});
 
-Route::get('/exercises', function () {
-    $exercises = DB::table('exercise')->get();
-    return $exercises;
-});
+Route::get('/plan_days', 'PlanDaysController@index');
+Route::get('/plan_days/{planDay}', 'PlanDaysController@show');
 
-Route::get('/exercise_instances', function () {
-    $exercise_instances = DB::table('exercise_instances')->get();
-    return $exercise_instances;
-});
+Route::get('/exercises', 'ExercisesController@index');
+Route::get('/exercises/{exercise}', 'ExercisesController@show');
+
+Route::get('/exercise_instances', 'ExerciseInstancesController@index');
+Route::get('/exercise_instances/{instance}', 'ExerciseInstancesController@show');
+
+Route::get('/assigned_plans', 'AssignedPlansController@index');
+Route::get('/assigned_plans/{plan}', 'AssignedPlansController@show');
+
+Route::get('/users', 'UsersController@index');
+Route::get('/users/{user}', 'UsersController@show');
