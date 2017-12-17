@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignedPlansTable extends Migration
+class CreateExerciseInstancePlanDayTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateAssignedPlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('assigned_plans', function (Blueprint $table) {
+        Schema::create('exercise_instance_plan_day', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('plan_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('exercise_instance_id')->unsigned()->comment = 'id from exercise_instances';
+            $table->integer('plan_day_id')->unsigned()->comment = 'id from exercise_instances';
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
-
         });
     }
 
@@ -30,6 +29,6 @@ class CreateAssignedPlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assigned_plans');
+        Schema::dropIfExists('exercise_instance_plan_day');
     }
 }

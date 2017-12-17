@@ -126,7 +126,15 @@ h1 {
     margin: 20px 0;
 }
 
+.padding-20-v {
+    padding: 20px 0;
+}
+
 .float-right {
     float: right!important;
     left: unset!important;
+}
+
+.card {
+    min-height: 200px;
 }

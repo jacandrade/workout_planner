@@ -7,7 +7,7 @@ $('#confirmDelete').on('click', function (e) {
     var token = $(this).data('token');
     if (id) {
         $.ajax({
-            url: '/plans',
+            url: '/exercise_instances',
             type: 'POST',
             data: { _method: 'delete', _token: token, id: id },
             success: function (data, textStatus, jqXHR) {
@@ -16,11 +16,11 @@ $('#confirmDelete').on('click', function (e) {
                 }
                 else {
                     $('#confirmDelete').toggleClass('disabled');
-                    $('#plan-' + data).remove();
+                    $('#instance-' + data).remove();
                     $('.feedback-container')
                     .html(`
                         <div class="alert alert-success" role="alert">
-                            Plan deleted!
+                            Exercise instance deleted!
                         </div>
                     `);
                     
@@ -33,6 +33,15 @@ $('#confirmDelete').on('click', function (e) {
             },
             error: function (jqXHR, status, error) {
                 console.log(status + ': ' + error);
+                $('.feedback-container')
+                .html(`
+                    <div class="alert alert-danger" role="alert">
+                        ${status} - ${error}
+                    </div>
+                `);
+                setTimeout(() => {
+                    $('.feedback-container').html(null);
+                },3000); 
             }
         });
     }
@@ -53,13 +62,28 @@ $('#deleteModal').on('show.bs.modal', function (event) {
 
 /**Create action handlers */
 
-$('#addPlanForm').submit(function (e) {
+$('#addExerciseInstanceForm').submit(function(e) {
     e.preventDefault();
     var form = $(this);
+    var serialized = form.serializeArray();
+    var plan_day_ids = serialized.reduce(function(a, current){
+        if(current.name == 'plan_day_ids')
+        {
+            a.push(current.value);
+        }
+
+        return a;
+    }, []);
+
+    var clean = serialized.filter(function (current) {
+        return current.name != 'plan_day_ids';
+    });
+
+    clean.push({name: 'plan_day_ids', value: plan_day_ids.join()})
     $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: form.serializeArray(),
+        data: clean,
         success: function (data, textStatus, jqXHR) {
             if (data.hasOwnProperty('error')) {
                 console.log(data);
@@ -70,10 +94,10 @@ $('#addPlanForm').submit(function (e) {
                 $('.feedback-container')
                     .html(`
                         <div class="alert alert-success" role="alert">
-                            Plan added!
+                            Exercise instance added!
                         </div>
                     `);
-                $('#addPlanForm')[0].reset();
+                $('#addExerciseInstanceForm')[0].reset();
                 setTimeout(() => {
                     $('.feedback-container').html(null);
                     $(':submit').toggleClass('disabled'); 
@@ -81,7 +105,16 @@ $('#addPlanForm').submit(function (e) {
             }
         },
         error: function (jqXHR, status, error) {
-            console.log(status + ': ' + error);
+            console.log(status + ': ' + error, jqXHR);
+            $('.feedback-container')
+            .html(`
+                <div class="alert alert-danger" role="alert">
+                    ${status} - ${error}
+                </div>
+            `);
+            setTimeout(() => {
+                $('.feedback-container').html(null);
+            },3000); 
         }
     });
 });

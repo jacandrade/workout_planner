@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -536,16 +536,14 @@ process.umask = function() { return 0; };
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -561,7 +559,7 @@ $('#confirmDelete').on('click', function (e) {
     var token = $(this).data('token');
     if (id) {
         $.ajax({
-            url: '/plans',
+            url: '/exercise_instances',
             type: 'POST',
             data: { _method: 'delete', _token: token, id: id },
             success: function success(data, textStatus, jqXHR) {
@@ -569,8 +567,8 @@ $('#confirmDelete').on('click', function (e) {
                     console.log(data);
                 } else {
                     $('#confirmDelete').toggleClass('disabled');
-                    $('#plan-' + data).remove();
-                    $('.feedback-container').html('\n                        <div class="alert alert-success" role="alert">\n                            Plan deleted!\n                        </div>\n                    ');
+                    $('#instance-' + data).remove();
+                    $('.feedback-container').html('\n                        <div class="alert alert-success" role="alert">\n                            Exercise instance deleted!\n                        </div>\n                    ');
 
                     Object(__WEBPACK_IMPORTED_MODULE_0_timers__["setTimeout"])(function () {
                         $('.feedback-container').html(null);
@@ -581,6 +579,10 @@ $('#confirmDelete').on('click', function (e) {
             },
             error: function error(jqXHR, status, _error) {
                 console.log(status + ': ' + _error);
+                $('.feedback-container').html('\n                    <div class="alert alert-danger" role="alert">\n                        ' + status + ' - ' + _error + '\n                    </div>\n                ');
+                Object(__WEBPACK_IMPORTED_MODULE_0_timers__["setTimeout"])(function () {
+                    $('.feedback-container').html(null);
+                }, 3000);
             }
         });
     }
@@ -599,21 +601,35 @@ $('#deleteModal').on('show.bs.modal', function (event) {
 
 /**Create action handlers */
 
-$('#addPlanForm').submit(function (e) {
+$('#addExerciseInstanceForm').submit(function (e) {
     e.preventDefault();
     var form = $(this);
+    var serialized = form.serializeArray();
+    var plan_day_ids = serialized.reduce(function (a, current) {
+        if (current.name == 'plan_day_ids') {
+            a.push(current.value);
+        }
+
+        return a;
+    }, []);
+
+    var clean = serialized.filter(function (current) {
+        return current.name != 'plan_day_ids';
+    });
+
+    clean.push({ name: 'plan_day_ids', value: plan_day_ids.join() });
     $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: form.serializeArray(),
+        data: clean,
         success: function success(data, textStatus, jqXHR) {
             if (data.hasOwnProperty('error')) {
                 console.log(data);
             } else {
                 $(':submit').toggleClass('disabled');
                 $('.row').append(data);
-                $('.feedback-container').html('\n                        <div class="alert alert-success" role="alert">\n                            Plan added!\n                        </div>\n                    ');
-                $('#addPlanForm')[0].reset();
+                $('.feedback-container').html('\n                        <div class="alert alert-success" role="alert">\n                            Exercise instance added!\n                        </div>\n                    ');
+                $('#addExerciseInstanceForm')[0].reset();
                 Object(__WEBPACK_IMPORTED_MODULE_0_timers__["setTimeout"])(function () {
                     $('.feedback-container').html(null);
                     $(':submit').toggleClass('disabled');
@@ -621,7 +637,11 @@ $('#addPlanForm').submit(function (e) {
             }
         },
         error: function error(jqXHR, status, _error2) {
-            console.log(status + ': ' + _error2);
+            console.log(status + ': ' + _error2, jqXHR);
+            $('.feedback-container').html('\n                <div class="alert alert-danger" role="alert">\n                    ' + status + ' - ' + _error2 + '\n                </div>\n            ');
+            Object(__WEBPACK_IMPORTED_MODULE_0_timers__["setTimeout"])(function () {
+                $('.feedback-container').html(null);
+            }, 3000);
         }
     });
 });

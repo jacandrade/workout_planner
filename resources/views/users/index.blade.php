@@ -4,23 +4,23 @@
 
     <div class="content padding-20-v">
 
-        <h1>Plans</h1>
+        <h1>Users</h1>
 
         <div class="row">
-        @foreach ($plans as $plan)
-            @include('plans.plan')
+        @foreach ($users as $user)
+            @include('users.user')
         @endforeach
         </div>
 
-        <!-- Delete Plan Modal -->
+        <!-- Delete user Modal -->
         @include('modals.delete')
 
-        <!-- Add plan modal -->
-        @include('modals.addplan')
+        <!-- Add user modal -->
+        @include('modals.adduser')
 
         
         <button type="button" class="btn btn-success rounded-circle btn-xl fixed-bottom float-right margin-40" 
-            data-toggle="modal" data-target="#addPlanModal">
+            data-toggle="modal" data-target="#addUserModal">
             <i class="fa fa-plus fa-4x"></i>
         </button>
     </div>
@@ -28,5 +28,5 @@
 @endsection
 
 @section('pagescripts')
-    <script src=js/plans.js></script>
+    <script src=js/users.js></script>
 @endsection

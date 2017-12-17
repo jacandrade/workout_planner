@@ -14,10 +14,6 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('plan_days') ? 'active' : ''}}" href="{{ url('/plan_days') }}">Plan days</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('assigned_plans') ? 'active' : ''}}" href="{{ url('/assigned_plans') }}">Assigned plans</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{ Request::is('exercises') ? 'active' : ''}}" href="{{ url('/exercises') }}">Exercises</a>
             </li>
             <li class="nav-item">

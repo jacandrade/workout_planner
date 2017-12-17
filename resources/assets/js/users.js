@@ -7,7 +7,7 @@ $('#confirmDelete').on('click', function (e) {
     var token = $(this).data('token');
     if (id) {
         $.ajax({
-            url: '/plans',
+            url: '/users',
             type: 'POST',
             data: { _method: 'delete', _token: token, id: id },
             success: function (data, textStatus, jqXHR) {
@@ -16,11 +16,11 @@ $('#confirmDelete').on('click', function (e) {
                 }
                 else {
                     $('#confirmDelete').toggleClass('disabled');
-                    $('#plan-' + data).remove();
+                    $('#user-' + data).remove();
                     $('.feedback-container')
                     .html(`
                         <div class="alert alert-success" role="alert">
-                            Plan deleted!
+                            User deleted!
                         </div>
                     `);
                     
@@ -33,6 +33,15 @@ $('#confirmDelete').on('click', function (e) {
             },
             error: function (jqXHR, status, error) {
                 console.log(status + ': ' + error);
+                $('.feedback-container')
+                .html(`
+                    <div class="alert alert-danger" role="alert">
+                        ${status} - ${error}
+                    </div>
+                `);
+                setTimeout(() => {
+                    $('.feedback-container').html(null);
+                },3000); 
             }
         });
     }
@@ -53,7 +62,7 @@ $('#deleteModal').on('show.bs.modal', function (event) {
 
 /**Create action handlers */
 
-$('#addPlanForm').submit(function (e) {
+$('#addUserForm').submit(function (e) {
     e.preventDefault();
     var form = $(this);
     $.ajax({
@@ -70,10 +79,10 @@ $('#addPlanForm').submit(function (e) {
                 $('.feedback-container')
                     .html(`
                         <div class="alert alert-success" role="alert">
-                            Plan added!
+                            User added!
                         </div>
                     `);
-                $('#addPlanForm')[0].reset();
+                $('#addUserForm')[0].reset();
                 setTimeout(() => {
                     $('.feedback-container').html(null);
                     $(':submit').toggleClass('disabled'); 
@@ -81,7 +90,16 @@ $('#addPlanForm').submit(function (e) {
             }
         },
         error: function (jqXHR, status, error) {
-            console.log(status + ': ' + error);
+            console.log(status + ': ' + error, jqXHR);
+            $('.feedback-container')
+            .html(`
+                <div class="alert alert-danger" role="alert">
+                    ${status} - ${error}
+                </div>
+            `);
+            setTimeout(() => {
+                $('.feedback-container').html(null);
+            },3000); 
         }
     });
 });

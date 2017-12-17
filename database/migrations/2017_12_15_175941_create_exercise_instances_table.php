@@ -16,7 +16,6 @@ class CreateExerciseInstancesTable extends Migration
         Schema::create('exercise_instances', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('exercise_id')->unsigned();
-            $table->integer('day_id')->unsigned()->nullable()->comment = 'optional, filled when this is part of a training plan (day)';
             $table->integer('exercise_duration')->unsigned()->default(0)->comment = 'duration in seconds';
             $table->integer('order')->default(0);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

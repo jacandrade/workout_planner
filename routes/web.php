@@ -23,15 +23,21 @@ Route::post('/plans', 'PlansController@store');
 
 Route::get('/plan_days', 'PlanDaysController@index');
 Route::get('/plan_days/{planDay}', 'PlanDaysController@show');
+Route::delete('/plan_days', 'PlanDaysController@delete');
+Route::post('/plan_days', 'PlanDaysController@store');
 
 Route::get('/exercises', 'ExercisesController@index');
 Route::get('/exercises/{exercise}', 'ExercisesController@show');
+Route::delete('/exercises', 'ExercisesController@delete');
+Route::post('/exercises', 'ExercisesController@store');
 
 Route::get('/exercise_instances', 'ExerciseInstancesController@index');
 Route::get('/exercise_instances/{instance}', 'ExerciseInstancesController@show');
+Route::delete('/exercise_instances', 'ExerciseInstancesController@delete');
+Route::post('/exercise_instances', 'ExerciseInstancesController@store');
 
-Route::get('/assigned_plans', 'AssignedPlansController@index');
-Route::get('/assigned_plans/{plan}', 'AssignedPlansController@show');
 
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{user}', 'UsersController@show');
+Route::delete('/users', 'UsersController@delete');
+Route::post('/users', 'UsersController@store');

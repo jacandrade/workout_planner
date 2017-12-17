@@ -2,11 +2,11 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">{{ $plan->plan_name }}</h4>
-            <p class="card-text">{{ $plan->plan_description }}</p>
+            <p class="card-text">{{ $plan->plan_description ?? 'No description available' }}</p>
             <p class="card-text">Difficulty: {{ $plan->plan_difficulty }}</p>
             <a href="/plans/{{ $plan->id }}" class="btn btn-primary"><i class="fa fa-pencil fa-lg"></i> Edit</a>
             <button type="button" class="btn btn-danger" 
-                data-toggle="modal" data-target="#deleteModal" data-planid="{{ $plan->id }}" data-token="{{ csrf_token() }}">
+                data-toggle="modal" data-target="#deleteModal" data-assetid="{{ $plan->id }}" data-token="{{ csrf_token() }}">
                 <i class="fa fa-trash fa-lg"></i> Delete
             </button>
         </div>
