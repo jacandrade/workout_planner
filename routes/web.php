@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/plans', 'PlansController@index');
 Route::get('/plans/{plan}', 'PlansController@show');
+Route::delete('/plans', 'PlansController@delete');
+Route::post('/plans', 'PlansController@store');
 
 
 Route::get('/plan_days', 'PlanDaysController@index');
