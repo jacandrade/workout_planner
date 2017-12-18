@@ -626,5 +626,45 @@ $('#addPlanForm').submit(function (e) {
     });
 });
 
+/** Edit action handlers */
+$('#editPlanModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var action = button.data('action'); // Extract info from data-* attributes
+    var modalContent = $('#editPlanModal').find('.modal-content');
+    modalContent.load(action, action);
+    $('#editPlanModal').trigger('shown.bs.modal');
+});
+
+$('#editPlanModal').on('shown.bs.modal', function (event) {
+    $('#editPlanForm').submit(function (e) {
+
+        e.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: form.serializeArray(),
+            success: function success(data, textStatus, jqXHR) {
+                if (data.hasOwnProperty('error')) {
+                    console.log(data);
+                    $('.feedback-container').html('\n                            <div class="alert alert-success" role="alert">\n                            ' + data.error + '\n                            </div>\n                        ');
+                } else {
+                    $(':submit').toggleClass('disabled');
+                    var cardNumber = form.attr('action').slice(form.attr('action').lastIndexOf('/') + 1);
+                    $('#plan-' + cardNumber).replaceWith(data);
+                    $('.feedback-container').html('\n                            <div class="alert alert-success" role="alert">\n                                Plan updated!\n                            </div>\n                        ');
+                    Object(__WEBPACK_IMPORTED_MODULE_0_timers__["setTimeout"])(function () {
+                        $('.feedback-container').html(null);
+                        $(':submit').toggleClass('disabled');
+                    }, 2000);
+                }
+            },
+            error: function error(jqXHR, status, _error3) {
+                console.log(status + ': ' + _error3);
+            }
+        });
+    });
+});
+
 /***/ })
 /******/ ]);

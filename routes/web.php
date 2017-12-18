@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/plans', 'PlansController@index');
 Route::get('/plans/{plan}', 'PlansController@show');
+Route::patch('/plans/{plan}', 'PlansController@update');
 Route::delete('/plans', 'PlansController@delete');
 Route::post('/plans', 'PlansController@store');
 

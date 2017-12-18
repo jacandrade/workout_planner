@@ -29,7 +29,7 @@
 
     <div class="container-fluid">
 
-        <div class="full-height">
+        <div class="min-height-90">
             @yield ('content')
         </div>
       

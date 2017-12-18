@@ -36,7 +36,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="exercise_duration" class="col-form-label">Exercise dutaion (seconds)</label>
+            <label for="exercise_duration" class="col-form-label">Exercise duration (seconds)</label>
             <input type="number" class="form-control" id="exercise_duration" name="exercise_duration" required>
           </div>
           <div class="form-group">

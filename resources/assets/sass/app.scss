@@ -118,8 +118,8 @@ h1 {
 
 /** custom css **/
 
-.margin-40 {
-    margin: 40px;
+.margin-5 {
+    margin: 5px;
 }
 
 .margin-20-v {
@@ -137,4 +137,14 @@ h1 {
 
 .card {
     min-height: 200px;
+}
+
+.min-height-90 {
+    min-height: 90vh;
+}
+
+.card {
+    button {
+        margin: 5px;
+    }
 }

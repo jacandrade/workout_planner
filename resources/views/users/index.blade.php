@@ -19,7 +19,7 @@
         @include('modals.adduser')
 
         
-        <button type="button" class="btn btn-success rounded-circle btn-xl fixed-bottom float-right margin-40" 
+        <button type="button" class="btn btn-success rounded-circle btn-xl fixed-bottom float-right margin-5" 
             data-toggle="modal" data-target="#addUserModal">
             <i class="fa fa-plus fa-4x"></i>
         </button>

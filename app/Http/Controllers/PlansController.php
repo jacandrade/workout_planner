@@ -14,7 +14,28 @@ class PlansController extends Controller
 
     public function show(Plan $plan)
     {
-        return $plan;
+        return view('modals.editplan', compact('plan'));
+    }
+
+    public function update(Plan $plan)
+    {
+        if(
+            $plan->update([
+                'plan_name' => request('plan_name'),
+                'plan_description' => request('plan_description'),
+                'plan_difficulty' => request('plan_difficulty'),
+            ])
+          )
+        {
+            return view('plans.plan', compact('plan'))->render();
+        }
+        else
+        {
+            return response()->json([
+                'error' => true,
+                'message' => 'There was an error updating the Plan '.$plan->plan_name.'. Please, contact an admin.'
+            ]);
+        }
     }
 
     public function delete()
